@@ -9,10 +9,14 @@ dist/
 .env.local
 .env.*.local
 
+# 本地数据库（SQLite 阶段）
+data/*.db
+data/*.db-wal
+data/*.db-shm
+
 # 杂项
 .DS_Store
 *.pem
 *.tsbuildinfo
-next-env.d.ts
 .vercel
 coverage/
