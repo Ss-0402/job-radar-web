@@ -1,0 +1,3 @@
+# pnpm 10+ 把安装策略从 .npmrc 移到了这里。
+# Next.js 的 require-hook 按根目录解析依赖，隔离式布局会找不到 styled-jsx / @swc/helpers。
+nodeLinker: hoisted
