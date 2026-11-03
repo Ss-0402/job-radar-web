@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useRef, useState } from "react";
 
@@ -30,10 +30,18 @@ type AnalyzeResponse = {
 
 type ApiError = { error?: { message?: string } };
 
-export function Analyzer({ remaining, limit }: { remaining: number; limit: number }) {
+export function Analyzer({
+  remaining,
+  limit,
+  initialJd = "",
+}: {
+  remaining: number;
+  limit: number;
+  initialJd?: string;
+}) {
   const [resumeText, setResumeText] = useState("");
   const [mySkills, setMySkills] = useState<string[]>([]);
-  const [jd, setJd] = useState("");
+  const [jd, setJd] = useState(initialJd);
   const [result, setResult] = useState<AnalyzeResponse | null>(null);
   const [left, setLeft] = useState(remaining);
   const [error, setError] = useState<string | null>(null);

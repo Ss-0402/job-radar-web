@@ -21,17 +21,22 @@ export default async function AppLayout({
   return (
     <div className="min-h-screen">
       <header className="border-b border-ink-200 bg-white">
-        <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-3">
-          <Link href="/" className="text-sm font-semibold tracking-tight">
-            🎯 岗位雷达
-          </Link>
-          <div className="flex items-center gap-3 text-sm text-ink-600">
-            <span>👤 {user.name}</span>
+        <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
+          <nav className="flex items-center gap-4 text-sm">
+            <Link href="/" className="font-semibold tracking-tight">
+              🎯 岗位雷达
+            </Link>
+            <Link href="/jobs" className="text-ink-600 hover:text-ink-900">
+              示例岗位
+            </Link>
+          </nav>
+          <div className="flex items-center gap-2 text-sm text-ink-600 sm:gap-3">
+            <span className="hidden sm:inline">👤 {user.name}</span>
             <LogoutButton />
           </div>
         </div>
       </header>
-      <main className="mx-auto max-w-5xl px-6 py-10">{children}</main>
+      <main className="mx-auto max-w-5xl px-4 py-8 sm:px-6 sm:py-10">{children}</main>
     </div>
   );
 }

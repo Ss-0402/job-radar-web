@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: job-radar-web
+    runtime: node
+    plan: free
+    region: singapore
+    branch: main
+    buildCommand: corepack enable && corepack prepare pnpm@11.28.5 --activate && pnpm install --frozen-lockfile && pnpm build
+    startCommand: pnpm start
+    healthCheckPath: /login
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      # 会话签名密钥，Render 自动生成随机值
+      - key: AUTH_SECRET
+        generateValue: true
+      # 在 Render 控制台手动填（不要写进仓库）
+      - key: DEEPSEEK_API_KEY
+        sync: false
+      # SQLite 文件位置；免费实例重启后会被清空（见 README 的已知限制）
+      - key: DATABASE_PATH
+        value: ./data/app.db

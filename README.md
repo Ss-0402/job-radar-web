@@ -15,6 +15,34 @@ pnpm dev                     # http://localhost:3000
 当前用 **SQLite**（Node 内置 `node:sqlite`，无原生依赖），数据文件在 `data/app.db`。
 换成 Postgres 时只改 `lib/db.ts` 与 `lib/auth/users.ts` 里的 SQL，接口层不动。
 
+## 部署（Render）
+
+仓库带 `render.yaml`，两种方式二选一：
+
+**A. Blueprint（推荐）**
+Render → New → Blueprint → 选本仓库 → 自动读取 `render.yaml` → 填 `DEEPSEEK_API_KEY` → Deploy。
+
+**B. 手动建 Web Service**
+- Runtime: Node，Build: `pnpm install && pnpm build`，Start: `pnpm start`
+- 环境变量：`AUTH_SECRET`（随机 32 字节 hex）、`DEEPSEEK_API_KEY`、`NODE_VERSION=22`
+
+首次部署约 3–5 分钟。健康检查路径用 `/login`（未登录也能返回 200）。
+
+## 已知限制
+
+- **SQLite 不持久**：免费实例重启/重新部署后 `data/app.db` 会清空，账号需要重新注册。要持久化需换 Postgres 或挂持久盘（付费）。
+- **免费实例会休眠**：闲置一段时间后首次访问需 30 秒左右唤醒。
+- **国内访问**：Render 新加坡节点一般可达，但不如国内 CDN；如需更好体验可迁到国内服务器。
+
+## 冒烟测试
+
+```bash
+pnpm build && pnpm start          # 另开一个终端
+node scripts/smoke.mjs http://127.0.0.1:3000
+```
+
+覆盖：未登录跳转、注册、`/me`、简历解析、JD 分析、额度扣减、退出。
+
 ## 接口
 
 | 方法 | 路径 | 说明 |
