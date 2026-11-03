@@ -78,7 +78,10 @@ export async function POST(req: Request) {
     profile = jdFromRules(jdText);
   }
 
-  const match = matchSkills(profile.skills, mySkills);
+  const match = matchSkills(profile.skills, mySkills, {
+    bonus: profile.bonusSkills,
+    jdText,
+  });
 
   return NextResponse.json({
     profile,

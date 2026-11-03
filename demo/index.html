@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>岗位雷达 · 视觉方向（第二版）</title>
+<style>
+  :root{
+    --paper:#FAFAF9; --surface:#FFFFFF; --line:rgba(25,24,22,.12); --line-soft:rgba(25,24,22,.07);
+    --ink:#191816; --mid:#4A4640; --mute:#6E6963; --accent:#C8321E;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,-apple-system,sans-serif;
+    font-size:15px;line-height:1.75;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .wrap{max-width:1120px;margin:0 auto;padding:56px 32px 96px}
+
+  .top{display:flex;align-items:baseline;justify-content:space-between;gap:24px;
+       padding-bottom:14px;border-bottom:1px solid var(--line)}
+  .brand{font-size:13px;font-weight:600;letter-spacing:.02em}
+  .top .meta{font-size:12px;color:var(--mute);font-variant-numeric:tabular-nums}
+
+  h1{font-size:44px;line-height:1.1;letter-spacing:-.02em;font-weight:600;margin:40px 0 0}
+  .lede{margin:14px 0 0;max-width:46em;color:var(--mid)}
+  .lede strong{font-weight:600;color:var(--ink)}
+
+  h2{font-size:18px;font-weight:600;margin:0}
+  .sec{margin-top:56px;padding-top:18px;border-top:1px solid var(--line)}
+  .sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px}
+  .sec-note{font-size:12px;color:var(--mute)}
+
+  .refs{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:22px}
+  .ref{margin:0}
+  .ref a{display:block;text-decoration:none}
+  .ref img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;object-position:top;
+           border:1px solid var(--line);border-radius:2px;background:#fff}
+  .ref b{display:block;font-size:13px;font-weight:600;margin-top:9px}
+  .ref span{display:block;font-size:12px;line-height:1.6;color:var(--mid);margin-top:3px}
+
+  .cards{margin-top:8px}
+  .card{display:grid;grid-template-columns:44px minmax(0,1fr) 320px;gap:28px;align-items:start;
+        padding:28px 0;border-bottom:1px solid var(--line-soft)}
+  .card:first-child{border-top:1px solid var(--line-soft)}
+  .card .no{font-size:12px;color:var(--mute);font-variant-numeric:tabular-nums;padding-top:6px}
+  .card h3{margin:0;font-size:22px;line-height:1.25;letter-spacing:-.01em;font-weight:600}
+  .card h3 a{text-decoration:none}
+  .card h3 a:hover{text-decoration:underline;text-underline-offset:3px}
+  .card p{margin:9px 0 0;color:var(--mid);font-size:14px;max-width:36em}
+  .card .refs-line{margin-top:12px;font-size:12px;color:var(--mute)}
+  .shot{display:block;border:1px solid var(--line);border-radius:2px;overflow:hidden;background:#fff}
+  .shot img{display:block;width:100%}
+  .shot-cap{display:flex;justify-content:space-between;align-items:center;margin-top:9px;font-size:12px}
+  .shot-cap a{text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:1px}
+  .shot-cap a:hover{border-color:var(--ink)}
+
+  .old{display:flex;gap:18px;flex-wrap:wrap;margin-top:18px;font-size:13px}
+  .old a{color:var(--mid);text-decoration:none;border-bottom:1px solid var(--line)}
+  .old a:hover{color:var(--ink);border-color:var(--ink)}
+
+  .foot{margin-top:56px;padding-top:16px;border-top:1px solid var(--line);
+        display:flex;justify-content:space-between;gap:16px;font-size:12px;color:var(--mute)}
+
+  @media (max-width:860px){
+    .wrap{padding:32px 20px 64px}
+    h1{font-size:30px}
+    .refs{grid-template-columns:repeat(2,1fr)}
+    .card{grid-template-columns:24px minmax(0,1fr);gap:12px}
+    .card .shot-wrap{grid-column:2;margin-top:14px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <div class="brand">岗位雷达</div>
+    <div class="meta">视觉方向 · 第二版 · 2026-11-03</div>
+  </div>
+
+  <h1>换骨架，不是换配色</h1>
+  <p class="lede">
+    第一版三个方向（A 冷静工具 / B 文档对照 / C 深色控制台）被否得有道理：它们其实是<b>同一个骨架</b>——
+    两个大输入框 + 一排指标 + 一堆圆角胶囊，只换了颜色和字体。所以这一版先去看真正做得好的产品怎么做，
+    再把<strong>结构</strong>换掉：D 把结果做成一张对照表，E 做成一份体检报告，F 做成一次逐条问诊。
+  </p>
+
+  <section class="sec">
+    <div class="sec-head">
+      <h2>先学：从这些产品里量出来的</h2>
+      <div class="sec-note">截图取自公开网页，仅作学习记录，不复制其版面</div>
+    </div>
+    <div class="refs">
+      <figure class="ref">
+        <a href="refs/vercel-geist.jpg" target="_blank"><img src="refs/vercel-geist.jpg" alt="Vercel Geist 设计系统页面"></a>
+        <b>Geist</b><span>1px 细线本身就是版面；格子内边距 40px；标题 40px / −0.04em。</span>
+      </figure>
+      <figure class="ref">
+        <a href="refs/stripe-docs.jpg" target="_blank"><img src="refs/stripe-docs.jpg" alt="Stripe 文档页"></a>
+        <b>Stripe 文档</b><span>正文 16/1.7，行宽约 40 汉字；全页没有一张卡片、一条阴影。</span>
+      </figure>
+      <figure class="ref">
+        <a href="refs/linear.jpg" target="_blank"><img src="refs/linear.jpg" alt="Linear 首页"></a>
+        <b>Linear</b><span>近黑 #08090A，界面字 13px，行高 32–36，分隔线只有 6% 白。</span>
+      </figure>
+      <figure class="ref">
+        <a href="refs/github-diff.jpg" target="_blank"><img src="refs/github-diff.jpg" alt="GitHub 对比页"></a>
+        <b>GitHub diff</b><span>行号槽 40px；命中/缺口的整行底色与分节头，是「逐条对照」的现成语言。</span>
+      </figure>
+      <figure class="ref">
+        <a href="refs/superhuman.jpg" target="_blank"><img src="refs/superhuman.jpg" alt="Superhuman 首页"></a>
+        <b>Superhuman</b><span>列表一行三行信息，1px 分隔，小号计数标签；密度高但不吵。</span>
+      </figure>
+    </div>
+    <p class="sec-note" style="margin-top:16px">
+      共同的结论：高级感来自线、格、字距、留白比例，不来自颜色和阴影。上一版全错在这一条上。
+    </p>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head">
+      <h2>第二版三个方向</h2>
+      <div class="sec-note">同一份简历、同一段 JD、同样 26 条要求，只换结构</div>
+    </div>
+    <div class="cards">
+
+      <article class="card">
+        <div class="no">D</div>
+        <div>
+          <h3><a href="d.html">对照表</a></h3>
+          <p>结果就是那张表：26 行，每行一条要求，左列 JD 原句、中列简历里的原句证据、右列判定。命中行安静，缺口行带红轨。
+             分析完两个大输入框折成一条材料栏，表格占满整宽。按 ↑↓ 选行、F 标记已补、Esc 收起建议。</p>
+          <div class="refs-line">骨架取自 GitHub diff 的逐条对照 + Geist 的细线网格</div>
+        </div>
+        <div class="shot-wrap">
+          <a class="shot" href="d.html"><img src="thumbs/d.jpg" alt="对照表页面缩略图"></a>
+          <div class="shot-cap"><span>26 行 · 命中 4 · 缺口 22</span><a href="d.html">打开 →</a></div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="no">E</div>
+        <div>
+          <h3><a href="e.html">体检报告</a></h3>
+          <p>分析完变成一张 A4 纸：编号、双线抬头、结论区一枚红章、分级表、三条医嘱、签名线。能打印、能截图发给学长。
+             换一份 JD 就像换一张检查单。</p>
+          <div class="refs-line">气质取自纸质单据 + Stripe 文档的字距；附 <a href="e-print.pdf">打印版 PDF</a></div>
+        </div>
+        <div class="shot-wrap">
+          <a class="shot" href="e.html"><img src="thumbs/e.jpg" alt="体检报告页面缩略图"></a>
+          <div class="shot-cap"><span>A4 纸 · 可打印</span><a href="e.html">打开 →</a></div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="no">F</div>
+        <div>
+          <h3><a href="f.html">逐条问诊</a></h3>
+          <p>不一次甩 22 项缺口，而是一条条问：「这条要求 Redis，你的项目用过吗？」用过 / 没有 / 说不清，按 1 2 3 答。
+             右侧实时记账，答完出结论。像学长在问，不像表单在审。</p>
+          <div class="refs-line">密度与节奏取自 Linear 和 GitHub 的键盘流</div>
+        </div>
+        <div class="shot-wrap">
+          <a class="shot" href="f.html"><img src="thumbs/f.jpg" alt="逐条问诊页面缩略图"></a>
+          <div class="shot-cap"><span>26 条 · 键盘作答</span><a href="f.html">打开 →</a></div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head"><h2>第一版（同一骨架的三次换色）</h2></div>
+    <div class="old">
+      <a href="a.html">A 冷静工具感</a>
+      <a href="b.html">B 文档对照感</a>
+      <a href="c.html">C 深色控制台</a>
+      <a href="index-v1.html">第一版对比页</a>
+    </div>
+  </section>
+
+  <div class="foot">
+    <span>看完在对话里说 D / E / F，或者告诉我怎么拼。</span>
+    <span>键盘 Tab 可以走完整页；图片点开是大图。</span>
+  </div>
+
+</div>
+</body>
+</html>

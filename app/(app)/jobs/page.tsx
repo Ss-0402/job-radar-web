@@ -16,61 +16,62 @@ const ALL = jobs as Job[];
 
 export default function JobsPage() {
   const directions = Array.from(new Set(ALL.map((j) => j.direction))).sort();
-  const cities = Array.from(new Set(ALL.map((j) => j.city))).sort();
 
   return (
-    <div className="space-y-6">
-      <section>
-        <p className="text-xs text-ink-400">阶段 4 · 示例岗位池</p>
-        <h1 className="mt-2 text-2xl font-semibold tracking-tight">18 条示例岗位</h1>
-        <p className="mt-2 text-sm text-ink-600">
-          没想好投哪个？挑一条点「用这条 JD 试试」，会带回主页自动填入。
+    <div>
+      <div className="flex flex-wrap items-baseline justify-between gap-3">
+        <h1 className="text-page font-semibold">岗位池</h1>
+        <p className="text-note text-ink-400">
+          {ALL.length} 条虚构示例 · 挑一条带回工作台
         </p>
-      </section>
+      </div>
 
-      <div className="flex flex-wrap gap-1.5 text-xs text-ink-500">
+      <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 border-y border-ink-200 py-2 text-note text-ink-400">
+        <span>方向</span>
         {directions.map((d) => (
-          <span key={d} className="rounded-md bg-ink-100 px-2 py-1">
+          <span key={d} className="text-ink-700">
             {d}
           </span>
         ))}
       </div>
 
-      <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+      <ul className="mt-1">
         {ALL.map((job) => (
           <li
             key={job.id}
-            className="rounded-xl border border-ink-200 bg-white p-4"
+            className="group border-b border-ink-200 transition-colors hover:bg-ink-100"
           >
-            <div className="flex items-start justify-between gap-3">
-              <div>
-                <h2 className="text-sm font-semibold">{job.title}</h2>
-                <p className="mt-1 text-xs text-ink-500">
-                  {job.company} · {job.city} · {job.degree} · {job.direction}
-                </p>
-              </div>
-              <Link
-                href={`/?job=${job.id}`}
-                className="shrink-0 rounded-lg border border-ink-200 px-2.5 py-1 text-xs text-ink-700 transition hover:bg-ink-50"
-              >
-                用这条 JD 试试
-              </Link>
-            </div>
+            <Link
+              href={`/?job=${job.id}`}
+              className="grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-6 gap-y-1 py-3 sm:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)_auto]"
+            >
+              <span className="min-w-0">
+                <span className="block text-ui font-semibold text-ink-900">{job.title}</span>
+                <span className="mt-0.5 block text-note text-ink-400">
+                  {job.company} · {job.city} · {job.degree}
+                </span>
+              </span>
 
-            <ul className="mt-3 flex flex-wrap gap-1">
-              {job.skills.slice(0, 5).map((s) => (
-                <li key={s} className="rounded bg-ink-50 px-1.5 py-0.5 text-[11px] text-ink-600">
-                  {s}
-                </li>
-              ))}
-            </ul>
+              <span className="hidden min-w-0 sm:block">
+                <span className="block truncate text-note text-ink-600">
+                  {job.skills.slice(0, 6).join("、")}
+                </span>
+                <span className="mt-0.5 block text-note text-ink-400">
+                  要求 {job.skills.length} 项
+                </span>
+              </span>
 
-            <p className="mt-3 line-clamp-2 text-xs leading-5 text-ink-500">
-              {job.jd.replace(/\n/g, " ").slice(0, 90)}…
-            </p>
+              <span className="shrink-0 text-note text-ink-400 group-hover:text-ink-900">
+                用这条 JD →
+              </span>
+            </Link>
           </li>
         ))}
       </ul>
+
+      <p className="mt-6 text-note text-ink-400">
+        点任意一行会把这条 JD 带回工作台，简历还是你自己那份。
+      </p>
     </div>
   );
 }

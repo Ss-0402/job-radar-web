@@ -1,4 +1,4 @@
-﻿import OpenAI from "openai";
+import OpenAI from "openai";
 import { extractSkills } from "@/lib/match/skills";
 
 /**
@@ -10,7 +10,10 @@ export type JdProfile = {
   title: string;
   years: string;
   degree: string;
+  /** 硬性要求：不满足就进不了面试的那类 */
   skills: string[];
+  /** 加分项：工具链、特定云厂商、IDE 插件这类「会用更好」 */
+  bonusSkills: string[];
   highlights: string[];
   source: "llm" | "rules";
 };
@@ -41,6 +44,7 @@ export function jdFromRules(jdText: string): JdProfile {
     years,
     degree,
     skills: extractSkills(jdText),
+    bonusSkills: [],
     highlights: [],
     source: "rules",
   };
@@ -64,9 +68,11 @@ export async function analyzeJd(jdText: string): Promise<JdProfile> {
               "你是招聘 JD 解析器。只输出 JSON，不要解释。字段：" +
               "title（岗位名称，字符串）、years（经验要求，如 \"3-5 年\"，未知填空串）、" +
               "degree（学历要求，未知填空串）、" +
-              "skills（岗位要求的技能数组，每项 1-4 个词，优先用行业常用写法）、" +
+              "skills（硬性技能要求数组，每项 1-4 个词：不满足就进不了面试的那类，如语言、框架、数据库、领域经验）、" +
+              "bonus（加分项数组，每项 1-4 个词：工具链、IDE 插件、特定云厂商、AI 编程工具、非必需但写「优先」的东西）、" +
               "highlights（3 条职责要点，每条不超过 20 字）。" +
-              "skills 只写技术/工具/能力名，不要写整句。",
+              "同一个词只能出现在 skills 或 bonus 其中一处。" +
+              "两项都只写技术/工具/能力名，不要写整句。",
           },
           { role: "user", content: jdText.slice(0, MAX_JD_CHARS) },
         ],
@@ -85,6 +91,9 @@ export async function analyzeJd(jdText: string): Promise<JdProfile> {
       years: typeof parsed.years === "string" ? parsed.years : "",
       degree: typeof parsed.degree === "string" ? parsed.degree : "",
       skills,
+      bonusSkills: asStringArray(parsed.bonus).filter(
+        (b) => !skills.some((s) => s.toLowerCase() === b.toLowerCase()),
+      ),
       highlights: asStringArray(parsed.highlights).slice(0, 3),
       source: "llm",
     };

@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>岗位雷达 · 对照表</title>
+<style>
+:root{
+  --paper:#FAFAF9;
+  --fill:#F4F3F1;
+  --fill-2:#EDEBE7;
+  --line:rgba(25,24,22,.10);
+  --line-2:rgba(25,24,22,.18);
+  --ink:#191816;
+  --ink-2:#4A4640;
+  --ink-3:#8A857D;
+  --ink-4:#C9C5BE;
+  --red:#C8321E;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
+  --mono:ui-monospace,"SF Mono","Cascadia Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  --t:120ms cubic-bezier(.2,0,0,1);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font:400 13px/1.45 var(--sans);
+  font-variant-numeric:tabular-nums;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+[hidden]{display:none !important}
+button{font:inherit;color:inherit}
+a{color:inherit}
+::selection{background:var(--fill-2);color:var(--ink)}
+:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* ---------- nav ---------- */
+.nav{position:sticky;top:0;z-index:40;background:var(--paper);border-bottom:1px solid var(--line)}
+.nav-in{max-width:1200px;height:48px;margin:0 auto;padding:0 32px;display:flex;align-items:center;gap:24px}
+.brand{display:inline-flex;align-items:center;gap:7px;text-decoration:none;font-size:13px;font-weight:600;letter-spacing:.01em}
+.brand svg{display:block;flex:none}
+.nav-links{display:flex;height:48px}
+.nav-links button{position:relative;height:48px;padding:0 12px;border:0;background:none;font-size:13px;color:var(--ink-3);cursor:pointer;transition:color var(--t)}
+.nav-links button:hover{color:var(--ink)}
+.nav-links button[aria-current]{color:var(--ink);font-weight:500}
+.nav-links button[aria-current]::after{content:"";position:absolute;left:12px;right:12px;bottom:0;height:1.5px;background:var(--ink)}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:12px;font-size:12px;color:var(--ink-3);white-space:nowrap}
+.nav-right b{font-weight:500;color:var(--ink)}
+.nav-right .quota b{color:var(--red)}
+.vline{width:1px;height:14px;background:var(--line)}
+.iconbtn{width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;padding:0;border:0;border-radius:6px;background:none;color:var(--ink-3);cursor:pointer;transition:background var(--t),color var(--t)}
+.iconbtn:hover{background:var(--fill);color:var(--ink)}
+
+/* ---------- page ---------- */
+main{max-width:1200px;margin:0 auto;padding:0 32px 64px}
+.page-head{display:flex;align-items:baseline;justify-content:space-between;gap:24px;padding:28px 0 18px}
+.page-head h1{margin:0;font-size:28px;line-height:1.2;letter-spacing:-.02em;font-weight:600}
+.page-meta{margin:0;font-size:13px;line-height:1.5;color:var(--ink-3);text-align:right}
+
+/* ---------- material bar ---------- */
+.material{display:flex;align-items:center;gap:16px;height:56px;margin:0 -32px;padding:0 32px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.fseg{display:flex;align-items:center;gap:7px;min-width:0}
+.fseg svg{flex:none;color:var(--ink-3)}
+.fname{font-size:13px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:240px}
+.fmeta{font-size:12px;color:var(--ink-3);white-space:nowrap}
+.fdiv{flex:none;width:1px;height:18px;background:var(--line)}
+.mat-actions{margin-left:auto;display:flex;align-items:center;gap:8px}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:32px;padding:0 12px;
+  border:1px solid var(--line-2);border-radius:6px;background:transparent;color:var(--ink);
+  font-size:13px;line-height:1;white-space:nowrap;cursor:pointer;
+  transition:background var(--t),border-color var(--t),color var(--t)}
+.btn:hover{border-color:var(--ink-3);background:var(--fill)}
+.btn svg{display:block;flex:none}
+.btn-solid{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.btn-solid:hover{background:#2E2B27;border-color:#2E2B27;color:var(--paper)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn-block{width:100%}
+
+/* ---------- summary ---------- */
+.summary{display:flex;align-items:center;gap:16px;height:44px;margin:0 -32px;padding:0 32px;border-bottom:1px solid var(--line)}
+.sum{display:flex;align-items:baseline;flex-wrap:wrap;gap:0 5px;font-size:12px;color:var(--ink-2)}
+.sum b{font-size:15px;font-weight:600;color:var(--ink)}
+.sum b.gap{color:var(--red)}
+.sum .x{font-style:normal;color:var(--ink-4);padding:0 2px}
+.keys{margin-left:auto;display:flex;align-items:center;gap:16px;font-size:11px;color:var(--ink-3)}
+.keys span{display:inline-flex;align-items:center;gap:5px}
+kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;
+  border:1px solid var(--line-2);border-radius:3px;background:var(--paper);
+  font:11px/1 var(--mono);color:var(--ink-2)}
+
+/* ---------- sheet ---------- */
+.workspace-body{display:grid;grid-template-columns:minmax(0,1fr) 25px 320px;align-items:start}
+.vrule{width:1px;margin-left:24px;align-self:stretch;background:var(--line)}
+.sheet-t{width:100%;table-layout:fixed;border-collapse:separate;border-spacing:0}
+.sheet-t thead th{position:sticky;top:48px;z-index:5;height:36px;padding:0 12px;
+  background:var(--fill);border-bottom:1px solid var(--line-2);
+  font-size:11px;font-weight:500;letter-spacing:.08em;color:var(--ink-2);text-align:left}
+.sheet-t th.n,.sheet-t td.n{padding-left:13px;padding-right:0}
+.sheet-t th.jd,.sheet-t td.jd{text-align:right;padding-left:0;padding-right:12px}
+.sheet-t th.ev{padding-left:12px}
+.sheet-t td{padding:0 12px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;transition:background var(--t)}
+
+.sheet-t tr.row{height:40px;cursor:pointer}
+.sheet-t tr.row td{height:40px;border-bottom:1px solid var(--line)}
+.sheet-t tr.row:hover td{background:rgba(25,24,22,.03)}
+.sheet-t tr.row[aria-current="true"] td{background:var(--fill-2)}
+.sheet-t tr.row[aria-current="true"] td.n{color:var(--ink);font-weight:600}
+.sheet-t tr.row:focus-visible{outline:2px solid var(--red);outline-offset:-2px}
+td.n{font-family:var(--mono);font-size:12px;color:var(--ink-3);letter-spacing:.02em}
+tr.gap td.n{box-shadow:inset 2px 0 0 var(--red)}
+tr.done td.n{box-shadow:none}
+td.req{font-size:14px;line-height:1.35;color:var(--ink)}
+td.ev{font-size:13px;color:var(--ink-2)}
+td.ev b{font-weight:400;color:var(--ink);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;text-decoration-color:var(--ink-3)}
+td.jd{font-size:11px}
+.miss{font-size:12px;color:var(--ink-3)}
+.gap-tag{font-size:11px;font-weight:500;letter-spacing:.08em;color:var(--red)}
+.done-tag{font-size:11px;letter-spacing:.06em;color:var(--ink-3)}
+.done-ev{font-size:12px;color:var(--ink-3)}
+.ck{display:block;margin:0 0 0 auto;color:var(--ink)}
+
+.sheet-t tr.grp td{height:28px;padding:0 14px;background:var(--fill);border-bottom:1px solid var(--line);
+  font-size:11px;font-weight:500;letter-spacing:.08em;color:var(--ink-3);white-space:nowrap}
+.sheet-t tr.ghost td{height:40px;border-bottom:1px solid var(--line)}
+.sheet-t tr.sk td{height:40px;border-bottom:1px solid var(--line)}
+.sk-line{display:block;height:8px;border-radius:1px;background:var(--fill-2);animation:sk 1.2s ease-in-out infinite}
+.sk-line+.sk-line{margin-top:0}
+@keyframes sk{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* ---------- rail ---------- */
+.rail{position:sticky;top:48px;align-self:start;max-height:calc(100vh - 48px);overflow-y:auto;overscroll-behavior:contain;
+  padding-left:24px;scrollbar-width:thin;transition:opacity var(--t)}
+.rail.is-dim{opacity:.4}
+.rail-head{height:36px;display:flex;align-items:center;justify-content:space-between;gap:10px;
+  border-bottom:1px solid var(--line-2);font-size:11px;font-weight:500;letter-spacing:.08em;color:var(--ink-3)}
+.adv{display:block;width:calc(100% + 12px);margin-left:-12px;padding:15px 12px 14px;
+  border:0;border-bottom:1px solid var(--line);background:none;text-align:left;cursor:pointer;
+  transition:background var(--t)}
+.adv-top{display:flex;align-items:baseline;gap:8px}
+.adv-no{font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+.adv-name{font-size:15px;font-weight:600;letter-spacing:-.01em}
+.adv-meta{margin-left:auto;font-size:11px;color:var(--red);white-space:nowrap}
+.adv-how{display:block;margin-top:5px;font-size:12px;line-height:1.65;color:var(--ink-2)}
+.adv.is-hit{background:var(--fill-2)}
+.adv.is-done .adv-name{text-decoration:line-through;text-decoration-color:var(--ink-4)}
+.adv.is-done .adv-how{color:var(--ink-3)}
+.rest-title{display:flex;align-items:center;justify-content:space-between;padding:18px 0 8px;
+  font-size:11px;font-weight:500;letter-spacing:.08em;color:var(--ink-3)}
+.rest{list-style:none;margin:0;padding:0}
+.rest li{border-bottom:1px solid var(--line)}
+.rest-b{display:flex;align-items:center;justify-content:space-between;gap:8px;width:calc(100% + 12px);height:36px;
+  margin-left:-12px;padding:0 12px;border:0;background:none;text-align:left;cursor:pointer;
+  font-size:12px;color:var(--ink-2);transition:background var(--t),color var(--t)}
+.rest-b:hover{color:var(--ink)}
+.rest-b .m{font-size:11px;color:var(--ink-3);white-space:nowrap}
+.rest-b.is-hit{background:var(--fill-2);color:var(--ink)}
+.rest-b.is-done span:first-child{color:var(--ink-3);text-decoration:line-through;text-decoration-color:var(--ink-4)}
+.rail-note{margin:16px 0 0;max-width:30ch;font-size:12px;line-height:1.7;color:var(--ink-3)}
+
+/* ---------- inputs ---------- */
+.inputs{display:grid;grid-template-columns:1fr 1fr;margin:0 -32px;padding:0 32px;border-top:1px solid var(--line)}
+.inp{padding:16px 24px 18px 0;min-width:0}
+.inp+.inp{padding:16px 0 18px 24px;border-left:1px solid var(--line)}
+.inp-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:8px}
+.inp-label{font-size:11px;font-weight:500;letter-spacing:.08em;color:var(--ink-3)}
+.inp-meta{font-size:12px;color:var(--ink-3);white-space:nowrap}
+textarea{display:block;width:100%;height:176px;padding:10px 12px;border:1px solid var(--line-2);border-radius:6px;
+  background:var(--paper);color:var(--ink);font:13px/1.75 var(--sans);resize:vertical;caret-color:var(--red)}
+textarea::placeholder{color:var(--ink-3)}
+textarea:hover{border-color:var(--ink-3)}
+textarea:focus{border-color:var(--ink)}
+.input-actions{display:flex;align-items:center;gap:10px;height:52px;margin:0 -32px;padding:0 32px;
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.hint{margin-right:auto;font-size:12px;color:var(--ink-3)}
+
+/* ---------- login ---------- */
+.auth{display:grid;grid-template-columns:minmax(0,1fr) 360px;border-top:1px solid var(--line);padding-top:40px}
+.auth-l{padding-right:56px;min-width:0}
+.claim{margin:0;max-width:20em;font-size:28px;line-height:1.35;letter-spacing:-.02em;font-weight:600}
+.nb{white-space:nowrap}
+.auth-sub{margin:12px 0 0;max-width:32em;font-size:13px;line-height:1.7;color:var(--ink-2)}
+.facts{margin:32px 0 0;max-width:380px;border-top:1px solid var(--line)}
+.facts div{display:flex;align-items:baseline;justify-content:space-between;height:40px;border-bottom:1px solid var(--line)}
+.facts dt{font-size:12px;color:var(--ink-3)}
+.facts dd{margin:0;font-size:13px;color:var(--ink)}
+.auth-r{border-left:1px solid var(--line);padding-left:56px}
+.field{margin-bottom:18px}
+.field label{display:block;margin-bottom:6px;font-size:11px;font-weight:500;letter-spacing:.08em;color:var(--ink-3)}
+.field input{display:block;width:100%;height:36px;padding:0 11px;border:1px solid var(--line-2);border-radius:6px;
+  background:var(--paper);color:var(--ink);font:13px/1 var(--sans);caret-color:var(--red)}
+.field input::placeholder{color:var(--ink-3)}
+.field input:hover{border-color:var(--ink-3)}
+.field input:focus{border-color:var(--ink)}
+.auth-r .btn{height:40px;margin-top:4px}
+.auth-foot{margin:14px 0 0;font-size:11px;line-height:1.7;color:var(--ink-3)}
+
+/* ---------- pool ---------- */
+.pool-t{width:100%;table-layout:fixed;border-collapse:separate;border-spacing:0;border-bottom:1px solid var(--line)}
+.pool-t thead th{height:32px;padding:0 12px;background:var(--fill);border-top:1px solid var(--line);border-bottom:1px solid var(--line-2);
+  font-size:11px;font-weight:500;letter-spacing:.08em;color:var(--ink-3);text-align:left}
+.pool-t tbody td{height:44px;padding:0 12px;border-bottom:1px solid var(--line);font-size:13px;
+  overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.pool-t tbody tr{transition:background var(--t)}
+.pool-t tbody tr:hover td{background:rgba(25,24,22,.03)}
+.pool-t th:first-child,.pool-t td:first-child{padding-left:14px}
+.pool-t th:last-child,.pool-t td:last-child{padding-right:14px;text-align:right}
+.p-job{font-size:14px;font-weight:500;color:var(--ink)}
+.p-co{color:var(--ink-2)}
+.p-num{color:var(--ink)}
+.p-num .u{font-size:11px;color:var(--ink-3)}
+.p-time{font-size:12px;color:var(--ink-3)}
+.link-act{display:inline-flex;align-items:center;gap:5px;padding:4px 0;border:0;border-bottom:1px solid transparent;
+  background:none;font-size:12px;color:var(--ink);cursor:pointer;transition:border-color var(--t),color var(--t)}
+.link-act:hover{border-bottom-color:var(--ink)}
+.link-act svg{display:block}
+.pool-note{margin:12px 0 0;font-size:12px;color:var(--ink-3)}
+
+/* ---------- responsive ---------- */
+@media (max-width:1120px){
+  .workspace-body{grid-template-columns:minmax(0,1fr)}
+  .vrule{display:none}
+  .rail{position:static;max-height:none;margin-top:28px;padding-left:0;border-top:1px solid var(--line)}
+  .adv{width:calc(100% + 12px)}
+  .auth{grid-template-columns:minmax(0,1fr) 340px}
+  .auth-l{padding-right:40px}
+  .auth-r{padding-left:40px}
+}
+@media (max-width:860px){
+  .auth{grid-template-columns:minmax(0,1fr);padding-top:28px}
+  .auth-l{padding-right:0}
+  .auth-r{margin-top:32px;padding-left:0;padding-top:28px;border-left:0;border-top:1px solid var(--line)}
+  .claim{font-size:24px}
+  .facts{margin-top:24px}
+}
+@media (max-width:640px){
+  .nav-in{padding:0 16px;gap:8px}
+  .nav-right{display:none}
+  .nav-links button{padding:0 10px}
+  .bname{display:none}
+  main{padding:0 16px 48px}
+  .page-head{display:block;padding:20px 0 14px}
+  .page-meta{margin-top:6px;text-align:left}
+  .material{height:auto;margin:0 -16px;padding:12px 16px;flex-wrap:wrap;gap:6px 14px}
+  .fseg{width:100%}
+  .fname{max-width:none}
+  .fdiv{display:none}
+  .mat-actions{width:100%;margin:6px 0 0;justify-content:flex-end}
+  .summary{height:auto;min-height:44px;margin:0 -16px;padding:8px 16px;gap:8px;flex-wrap:wrap}
+  .keys{display:none}
+  .inputs{grid-template-columns:1fr;margin:0 -16px;padding:0 16px}
+  .inp{padding:14px 0 16px}
+  .inp+.inp{padding:14px 0 16px;border-left:0;border-top:1px solid var(--line)}
+  .input-actions{height:auto;margin:0 -16px;padding:12px 16px;flex-wrap:wrap}
+  .input-actions .hint{flex:1 1 100%;margin:0 0 2px}
+  .auth{padding-top:24px}
+  .claim{font-size:22px}
+  .auth-r{padding-top:24px}
+
+  /* sheet -> two-line rows */
+  .sheet-t{display:block;border-top:1px solid var(--line)}
+  .sheet-t thead{display:none}
+  .sheet-t tbody,.sheet-t tr,.sheet-t td{display:block}
+  .sheet-t tr.row{position:relative;height:auto;padding:11px 34px 12px 14px;border-bottom:1px solid var(--line);border-left:2px solid transparent}
+  .sheet-t tr.row td{height:auto;padding:0;border:0;white-space:normal;overflow:visible}
+  .sheet-t tr.gap{border-left-color:var(--red)}
+  .sheet-t tr.gap td.n{box-shadow:none}
+  .sheet-t tr.row td.n{display:inline-block;width:auto;margin-right:8px;font-size:11px;vertical-align:baseline}
+  .sheet-t tr.row td.req{display:inline;font-size:14px;line-height:1.5}
+  .sheet-t tr.row td.ev{display:block;margin-top:5px;padding-left:22px;font-size:12.5px;line-height:1.55}
+  .sheet-t tr.row td.jd{position:absolute;top:11px;right:10px;width:auto;text-align:right}
+  .sheet-t tr.grp{border-left:0}
+  .sheet-t tr.grp td{height:26px;padding:0 14px;line-height:26px}
+  .sheet-t tr.ghost{display:block;border-left:0;padding:0;height:40px}
+  .sheet-t tr.ghost td{height:40px;border-bottom:1px solid var(--line)}
+  .sheet-t tr.sk td{border:0}
+  .sheet-t tr.sk{display:grid;grid-template-columns:26px 1fr;gap:10px;padding:14px 14px 0;height:auto}
+  .sheet-t tr.sk td{display:block}
+
+  /* pool -> stacked rows */
+  .pool-t{display:block;border-top:1px solid var(--line)}
+  .pool-t thead{display:none}
+  .pool-t tbody,.pool-t tr,.pool-t td{display:block}
+  .pool-t tbody tr{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 10px;padding:12px 14px;border-bottom:1px solid var(--line)}
+  .pool-t tbody td{height:auto;padding:0;border:0;white-space:normal;overflow:visible}
+  .p-job{flex:1 1 100%}
+  .p-co{flex:1 1 100%;font-size:12px}
+  .p-num{order:3}
+  .p-time{order:4}
+  .p-act{order:5;margin-left:auto}
+  .pool-t td:last-child{order:5;margin-left:auto;text-align:right}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none !important;animation:none !important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<h1 class="sr-only">岗位雷达 · 简历与 JD 逐条对照</h1>
+
+<header class="nav">
+  <div class="nav-in">
+    <a class="brand" href="#workspace" data-goto="workspace">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="8.5"/>
+        <circle cx="12" cy="12" r="3.5"/>
+        <path d="M12 12 18.6 5.4"/>
+        <circle cx="16.2" cy="8.4" r="1.2" fill="currentColor" stroke="none"/>
+      </svg>
+      <span class="bname">岗位雷达</span>
+    </a>
+    <nav class="nav-links" aria-label="主导航">
+      <button type="button" data-goto="workspace" aria-current="page">工作台</button>
+      <button type="button" data-goto="pool">岗位池</button>
+      <button type="button" data-goto="login">登录</button>
+    </nav>
+    <div class="nav-right">
+      <span class="quota">今日剩 <b>2</b> / 3 次</span>
+      <span class="vline" aria-hidden="true"></span>
+      <span class="who">111</span>
+      <button type="button" class="iconbtn" aria-label="退出登录">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M13.5 4.5H9A2.5 2.5 0 0 0 6.5 7v10A2.5 2.5 0 0 0 9 19.5h4.5"/>
+          <path d="M16 8.5 19.5 12 16 15.5"/>
+          <path d="M19.5 12H11"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ================= WORKSPACE ================= -->
+  <section class="view" data-view="workspace" aria-label="工作台">
+    <div class="page-head">
+      <h1>对照表</h1>
+      <p class="page-meta" id="job-meta">AI应用研发工程师 · 某AI创业公司 · 北京</p>
+    </div>
+
+    <!-- material bar (after analysis) -->
+    <div class="material" id="mat">
+      <div class="fseg">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6.5 3.5h7L18 8v12.5H6.5z"/><path d="M13.5 3.5V8H18"/>
+        </svg>
+        <span class="fname">简历-2026.md</span>
+        <span class="fmeta">133 字 · 解析出 8 项</span>
+      </div>
+      <span class="fdiv" aria-hidden="true"></span>
+      <div class="fseg">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6.5 3.5h7L18 8v12.5H6.5z"/><path d="M13.5 3.5V8H18"/>
+        </svg>
+        <span class="fname" id="jd-fname">AI应用研发-JD.txt</span>
+        <span class="fmeta">428 字 · 拆出 26 条</span>
+      </div>
+      <div class="mat-actions">
+        <button type="button" class="btn btn-solid" id="btn-reanalyze">重新分析</button>
+        <button type="button" class="btn" id="btn-change-jd">换一份 JD</button>
+      </div>
+    </div>
+
+    <!-- input area (before analysis) -->
+    <div class="inputs" id="inputs" hidden>
+      <div class="inp">
+        <div class="inp-head">
+          <label class="inp-label" for="resume">简历</label>
+          <span class="inp-meta">txt · md · docx · pdf，≤ 5MB</span>
+        </div>
+        <textarea id="resume" spellcheck="false">日常交流。
+开发与分析：Java、Python、SQL、Git、Linux；熟练使用 Excel 与 PowerPoint 整理、呈现结果。
+框架与工具：Spring Boot、MyBatis、Vue、MySQL、Flask；全国计算机等级考试二级（Java）合格证书。</textarea>
+      </div>
+      <div class="inp">
+        <div class="inp-head">
+          <label class="inp-label" for="jd">目标岗位 JD</label>
+          <span class="inp-meta">整段粘贴，带编号没关系</span>
+        </div>
+        <textarea id="jd" spellcheck="false">岗位职责：
+1. 负责 AI 应用后端研发，基于 RAG 与 LangChain / LlamaIndex 搭建检索增强链路，使用 Milvus、Qdrant、Elasticsearch 等向量数据库完成召回与重排。
+2. 负责 Prompt 工程与 Function Calling 设计，用 Dify 落地业务流程，接入大模型能力并做效果评测。
+3. 参与 AI Coding 工具链建设与推广（Cursor、GitHub Copilot），提升团队研发效率。
+4. 参与微服务拆分与系统架构设计，用 Redis、Kafka、RabbitMQ 处理缓存与异步消息。
+任职要求：
+5. 熟练掌握 Python，熟悉 Django、FastAPI、Flask 至少一种框架，理解异步编程模型。
+6. 3 年以上后端开发经验，本科及以上学历；有 RAG 线上落地经验者优先。</textarea>
+      </div>
+    </div>
+    <div class="input-actions" id="input-actions" hidden>
+      <span class="hint">会消耗 1 次额度 · 约 20 秒</span>
+      <button type="button" class="btn" id="btn-cancel">取消</button>
+      <button type="button" class="btn btn-solid" id="btn-analyze">分析匹配</button>
+    </div>
+
+    <div class="summary">
+      <div class="sum" id="sum-line" aria-live="polite"></div>
+      <div class="keys" aria-hidden="true">
+        <span><kbd>↑</kbd><kbd>↓</kbd> 切行</span>
+        <span><kbd>F</kbd> 标记已补</span>
+        <span><kbd>Esc</kbd> 收起建议</span>
+      </div>
+    </div>
+
+    <div class="workspace-body">
+      <table class="sheet-t" id="sheet" aria-label="26 条要求逐条对照">
+        <caption class="sr-only">招聘要求、简历证据与判定</caption>
+        <colgroup>
+          <col style="width:40px">
+          <col style="width:42%">
+          <col>
+          <col style="width:44px">
+        </colgroup>
+        <thead>
+          <tr>
+            <th class="n" scope="col">#</th>
+            <th class="req" scope="col">招聘要求</th>
+            <th class="ev" scope="col">你的简历</th>
+            <th class="jd" scope="col">判定</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+
+      <div class="vrule" aria-hidden="true"></div>
+
+      <aside class="rail" id="rail" aria-label="先补这三个">
+        <div id="rail-body"></div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ================= LOGIN ================= -->
+  <section class="view" data-view="login" aria-label="登录" hidden>
+    <div class="page-head">
+      <h1>登录</h1>
+      <p class="page-meta">每个账号每天 3 次免费解析</p>
+    </div>
+    <div class="auth">
+      <div class="auth-l">
+        <p class="claim">把简历和 JD 逐条对完，再决定<span class="nb">投不投。</span></p>
+        <p class="auth-sub">对照结果按行保存；换一份 JD，简历不用重贴。</p>
+        <dl class="facts">
+          <div><dt>免费额度</dt><dd>3 次 / 天</dd></div>
+          <div><dt>单次耗时</dt><dd>约 20 秒</dd></div>
+          <div><dt>简历留存</dt><dd>仅本次分析</dd></div>
+        </dl>
+      </div>
+      <form class="auth-r" id="auth" novalidate>
+        <div class="field">
+          <label for="u">账号</label>
+          <input type="text" id="u" name="username" value="111" autocomplete="username">
+        </div>
+        <div class="field">
+          <label for="p">密码</label>
+          <input type="password" id="p" name="password" placeholder="不少于 8 位" autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn btn-solid btn-block">继续</button>
+        <p class="auth-foot">演示账号 111，密码任意 8 位。简历只用于这一次对照。</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- ================= POOL ================= -->
+  <section class="view" data-view="pool" aria-label="岗位池" hidden>
+    <div class="page-head">
+      <h1>岗位池</h1>
+      <p class="page-meta">6 条 · 最近抓取 11-03 14:20</p>
+    </div>
+    <table class="pool-t">
+      <colgroup>
+        <col style="width:30%">
+        <col style="width:33%">
+        <col style="width:84px">
+        <col style="width:96px">
+        <col>
+      </colgroup>
+      <thead>
+        <tr>
+          <th scope="col">岗位</th>
+          <th scope="col">公司 · 城市</th>
+          <th scope="col">必备技数</th>
+          <th scope="col">更新时间</th>
+          <th scope="col"><span class="sr-only">操作</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="p-job">AI应用研发工程师</td>
+          <td class="p-co">某AI创业公司 · 北京</td>
+          <td class="p-num">26 <span class="u">项</span></td>
+          <td class="p-time">今天 14:20</td>
+          <td><button type="button" class="link-act" data-job="AI应用研发工程师" data-co="某AI创业公司 · 北京">对照
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13"/><path d="M12.5 6.5 18.5 12l-6 5.5"/></svg>
+          </button></td>
+        </tr>
+        <tr>
+          <td class="p-job">大模型应用开发</td>
+          <td class="p-co">某互联网公司 · 上海</td>
+          <td class="p-num">24 <span class="u">项</span></td>
+          <td class="p-time">昨天 18:05</td>
+          <td><button type="button" class="link-act" data-job="大模型应用开发" data-co="某互联网公司 · 上海">对照
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13"/><path d="M12.5 6.5 18.5 12l-6 5.5"/></svg>
+          </button></td>
+        </tr>
+        <tr>
+          <td class="p-job">数据开发工程师</td>
+          <td class="p-co">某零售集团 · 杭州</td>
+          <td class="p-num">19 <span class="u">项</span></td>
+          <td class="p-time">11月1日</td>
+          <td><button type="button" class="link-act" data-job="数据开发工程师" data-co="某零售集团 · 杭州">对照
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13"/><path d="M12.5 6.5 18.5 12l-6 5.5"/></svg>
+          </button></td>
+        </tr>
+        <tr>
+          <td class="p-job">前端开发（AI 方向）</td>
+          <td class="p-co">某SaaS公司 · 深圳</td>
+          <td class="p-num">21 <span class="u">项</span></td>
+          <td class="p-time">10月30日</td>
+          <td><button type="button" class="link-act" data-job="前端开发（AI 方向）" data-co="某SaaS公司 · 深圳">对照
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13"/><path d="M12.5 6.5 18.5 12l-6 5.5"/></svg>
+          </button></td>
+        </tr>
+        <tr>
+          <td class="p-job">Java 后端开发</td>
+          <td class="p-co">某银行科技子公司 · 南京</td>
+          <td class="p-num">18 <span class="u">项</span></td>
+          <td class="p-time">10月29日</td>
+          <td><button type="button" class="link-act" data-job="Java 后端开发" data-co="某银行科技子公司 · 南京">对照
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13"/><path d="M12.5 6.5 18.5 12l-6 5.5"/></svg>
+          </button></td>
+        </tr>
+        <tr>
+          <td class="p-job">算法工程师（CV）</td>
+          <td class="p-co">某自动驾驶公司 · 北京</td>
+          <td class="p-num">22 <span class="u">项</span></td>
+          <td class="p-time">10月28日</td>
+          <td><button type="button" class="link-act" data-job="算法工程师（CV）" data-co="某自动驾驶公司 · 北京">对照
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13"/><path d="M12.5 6.5 18.5 12l-6 5.5"/></svg>
+          </button></td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="pool-note">技能数指 JD 里拆出的必备项；点「对照」会带回工作台，接着上次的简历继续对。</p>
+  </section>
+
+</main>
+
+<script>
+(function(){
+  'use strict';
+
+  var CHECK = '<svg class="ck" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9.5 17.5 19.5 6.5"/></svg>';
+
+  var DATA = [
+    {skill:'Python', g:'语言与框架', req:'熟练掌握 Python，能独立写后端服务', hit:true, ev:'开发与分析：Java、<b>Python</b>、SQL、Git、Linux'},
+    {skill:'Java', g:'语言与框架', req:'Java 语法与 JVM 基础，能读现有代码', hit:true, ev:'全国计算机等级考试二级（<b>Java</b>）合格证书'},
+    {skill:'Spring Boot', g:'语言与框架', req:'Spring Boot 服务开发与接口联调', hit:true, ev:'框架与工具：<b>Spring Boot</b>、MyBatis、Vue、MySQL'},
+    {skill:'MySQL', g:'语言与框架', req:'MySQL 数据建模与慢查询优化', hit:true, ev:'框架与工具：Spring Boot、MyBatis、Vue、<b>MySQL</b>'},
+    {skill:'异步编程', g:'语言与框架', req:'理解异步编程模型（协程 / 事件循环）'},
+    {skill:'Spring Cloud', g:'语言与框架', req:'Spring Cloud 组件（注册、配置、网关）'},
+
+    {skill:'RAG', g:'检索与生成', req:'RAG 检索增强链路的线上落地', m:2, how:'用 30 条岗位 JD 建一个小库，只调切分长度和 k，把召回率记下来。'},
+    {skill:'LangChain', g:'检索与生成', req:'用 LangChain 编排检索与工具调用', m:2, how:'把现有 Flask 接口接上 RetrievalQA，先跑通一条链，再谈调优。'},
+    {skill:'LlamaIndex', g:'检索与生成', req:'LlamaIndex 索引与查询引擎'},
+    {skill:'向量数据库', g:'检索与生成', req:'向量数据库选型与召回重排'},
+    {skill:'Milvus', g:'检索与生成', req:'Milvus 集群部署与索引调参'},
+    {skill:'Qdrant', g:'检索与生成', req:'Qdrant 过滤检索与负载评估'},
+    {skill:'Elasticsearch', g:'检索与生成', req:'Elasticsearch 混合检索与重排'},
+    {skill:'Prompt 工程', g:'检索与生成', req:'Prompt 工程与输出结构约束', m:2, how:'把「判断岗位缺口」写成固定 JSON 输出的 Prompt，配 3 条 few-shot。'},
+    {skill:'Function Calling', g:'检索与生成', req:'Function Calling / 工具调用设计'},
+    {skill:'Dify', g:'检索与生成', req:'用 Dify 落地业务流程编排'},
+
+    {skill:'Cursor', g:'工程与服务', req:'Cursor 等 AI 编辑器日常使用'},
+    {skill:'GitHub Copilot', g:'工程与服务', req:'GitHub Copilot 团队内推广'},
+    {skill:'微服务', g:'工程与服务', req:'微服务拆分与服务边界设计'},
+    {skill:'系统架构设计', g:'工程与服务', req:'系统架构设计与容量评估'},
+    {skill:'Redis', g:'工程与服务', req:'Redis 缓存设计与热点治理'},
+    {skill:'Kafka', g:'工程与服务', req:'Kafka 异步消息与消费幂等'},
+    {skill:'RabbitMQ', g:'工程与服务', req:'RabbitMQ 队列与消息可靠性'},
+    {skill:'Django', g:'工程与服务', req:'Django 框架开发后台服务'},
+    {skill:'FastAPI', g:'工程与服务', req:'FastAPI 异步接口开发'},
+    {skill:'Flask', g:'工程与服务', req:'Flask 轻量服务开发'}
+  ];
+
+  var GROUPS = ['语言与框架', '检索与生成', '工程与服务'];
+  var SUGGEST = ['LangChain', 'RAG', 'Prompt 工程'];
+
+  var tbody = document.getElementById('tbody');
+  var rail = document.getElementById('rail');
+  var railBody = document.getElementById('rail-body');
+  var sumLine = document.getElementById('sum-line');
+  var sheet = document.getElementById('sheet');
+  var mat = document.getElementById('mat');
+  var inputs = document.getElementById('inputs');
+  var inputActions = document.getElementById('input-actions');
+  var keys = document.querySelector('.keys');
+  var cur = -1;
+
+  function motionOK(){
+    return !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+
+  function counts(){
+    var hit = 0, done = 0;
+    DATA.forEach(function(r){ if(r.hit) hit++; else if(r.done) done++; });
+    return { total:DATA.length, hit:hit, done:done, gap:DATA.length - hit - done };
+  }
+
+  function updateCounts(){
+    var c = counts();
+    sumLine.innerHTML = '<b>' + c.total + '</b> 条要求 <i class="x">·</i> 命中 <b>' + c.hit + '</b> <i class="x">·</i> ' +
+      (c.done ? '已补 <b>' + c.done + '</b> <i class="x">·</i> ' : '') +
+      '缺口 <b class="gap">' + c.gap + '</b>';
+  }
+
+  function rowHTML(r, i){
+    var num = (i + 1 < 10 ? '0' : '') + (i + 1);
+    var cls = 'row ' + (r.hit ? 'hit' : 'gap') + (r.done ? ' done' : '');
+    var ev = r.hit ? r.ev : (r.done ? '<span class="done-ev">已补充 · 待重新分析</span>' : '<span class="miss">简历未提及</span>');
+    var jd = r.hit ? CHECK : (r.done ? '<span class="done-tag">已补</span>' : '<span class="gap-tag">缺</span>');
+    return '<tr class="' + cls + '" data-i="' + i + '" data-skill="' + r.skill + '" tabindex="' + (i === 0 ? 0 : -1) + '">' +
+      '<td class="n">' + num + '</td>' +
+      '<td class="req">' + r.req + '</td>' +
+      '<td class="ev">' + ev + '</td>' +
+      '<td class="jd">' + jd + '</td></tr>';
+  }
+
+  function renderTable(){
+    var out = [];
+    GROUPS.forEach(function(g){
+      var n = DATA.filter(function(r){ return r.g === g; }).length;
+      out.push('<tr class="grp"><td colspan="4">' + g + ' · ' + n + ' 条</td></tr>');
+      DATA.forEach(function(r, i){ if(r.g === g) out.push(rowHTML(r, i)); });
+    });
+    tbody.innerHTML = out.join('');
+    cur = -1;
+  }
+
+  function renderRail(){
+    var head = '<div class="rail-head"><span>先补这三个</span><span>按 JD 提及次数</span></div>';
+    var cards = SUGGEST.map(function(name, k){
+      var r = DATA.filter(function(d){ return d.skill === name; })[0];
+      return '<button type="button" class="adv" data-skill="' + name + '">' +
+        '<span class="adv-top"><span class="adv-no">0' + (k + 1) + '</span>' +
+        '<span class="adv-name">' + name + '</span>' +
+        '<span class="adv-meta">JD 提到 ' + (r.m || 1) + ' 次</span></span>' +
+        '<span class="adv-how">' + r.how + '</span></button>';
+    }).join('');
+    var rest = DATA.filter(function(r){ return !r.hit && SUGGEST.indexOf(r.skill) < 0; });
+    var list = rest.map(function(r){
+      return '<li><button type="button" class="rest-b" data-skill="' + r.skill + '">' +
+        '<span>' + r.skill + '</span><span class="m">JD 提到 ' + (r.m || 1) + ' 次</span></button></li>';
+    }).join('');
+    railBody.innerHTML = head + cards +
+      '<div class="rest-title"><span>其余缺口</span><span>' + rest.length + ' 项</span></div>' +
+      '<ul class="rest">' + list + '</ul>';
+  }
+
+  function ghostRows(){
+    var out = '';
+    for(var i = 0; i < 10; i++) out += '<tr class="ghost"><td colspan="4"></td></tr>';
+    tbody.innerHTML = out;
+    cur = -1;
+  }
+
+  function syncRail(skill){
+    railBody.querySelectorAll('[data-skill]').forEach(function(el){
+      el.classList.toggle('is-hit', el.dataset.skill === skill);
+    });
+    if(!skill) return;
+    var el = railBody.querySelector('[data-skill="' + skill + '"]');
+    if(!el) return;
+    var rb = rail.getBoundingClientRect(), eb = el.getBoundingClientRect();
+    if(eb.top < rb.top + 36 || eb.bottom > rb.bottom - 4){
+      rail.scrollBy({ top: eb.top - rb.top - 48, behavior: motionOK() ? 'smooth' : 'auto' });
+    }
+  }
+
+  function setCur(i, opts){
+    cur = i;
+    var focused = null;
+    tbody.querySelectorAll('tr.row').forEach(function(tr){
+      var on = +tr.dataset.i === i;
+      tr.setAttribute('aria-current', on ? 'true' : 'false');
+      tr.tabIndex = on ? 0 : -1;
+      if(on) focused = tr;
+    });
+    if(opts && opts.focus && focused) focused.focus({ preventScroll: true });
+    if(opts && opts.scroll && focused) focused.scrollIntoView({ block: 'center', behavior: motionOK() ? 'smooth' : 'auto' });
+    if(DATA[i]) syncRail(DATA[i].skill);
+  }
+
+  function clearCur(){
+    cur = -1;
+    tbody.querySelectorAll('tr.row').forEach(function(tr){ tr.removeAttribute('aria-current'); });
+    railBody.querySelectorAll('.is-hit').forEach(function(el){ el.classList.remove('is-hit'); });
+    rail.scrollTo({ top: 0, behavior: 'auto' });
+  }
+
+  function toggle(i){
+    var r = DATA[i];
+    if(!r || r.hit) return;
+    r.done = !r.done;
+    var tr = tbody.querySelector('tr[data-i="' + i + '"]');
+    if(!tr) return;
+    tr.classList.toggle('done', r.done);
+    tr.classList.toggle('gap', !r.done);
+    tr.querySelector('.ev').innerHTML = r.done
+      ? '<span class="done-ev">已补充 · 待重新分析</span>'
+      : '<span class="miss">简历未提及</span>';
+    tr.querySelector('.jd').innerHTML = r.done
+      ? '<span class="done-tag">已补</span>'
+      : '<span class="gap-tag">缺</span>';
+    updateCounts();
+    railBody.querySelectorAll('[data-skill="' + r.skill + '"]').forEach(function(el){
+      el.classList.toggle('is-done', r.done);
+      var meta = el.querySelector('.adv-meta, .m');
+      if(!meta) return;
+      if(r.done){
+        if(!meta.dataset.orig) meta.dataset.orig = meta.textContent;
+        meta.textContent = '已补';
+      } else if(meta.dataset.orig){
+        meta.textContent = meta.dataset.orig;
+      }
+    });
+  }
+
+  function setLoading(on){
+    var btnRe = document.getElementById('btn-reanalyze');
+    var btnCh = document.getElementById('btn-change-jd');
+    if(on){
+      tbody.innerHTML = [56, 44, 64].map(function(w, k){
+        return '<tr class="sk"><td class="n"></td>' +
+          '<td><i class="sk-line" style="width:' + w + '%"></i></td>' +
+          '<td><i class="sk-line" style="width:' + [46, 60, 38][k] + '%"></i></td>' +
+          '<td></td></tr>';
+      }).join('');
+      sumLine.innerHTML = '<span>正在逐条对照 · 26 条要求，约 20 秒</span>';
+      rail.classList.add('is-dim');
+      rail.setAttribute('aria-busy', 'true');
+      sheet.setAttribute('aria-busy', 'true');
+      btnRe.disabled = btnCh.disabled = true;
+      cur = -1;
+    } else {
+      rail.classList.remove('is-dim');
+      rail.removeAttribute('aria-busy');
+      sheet.removeAttribute('aria-busy');
+      btnRe.disabled = btnCh.disabled = false;
+      renderTable();
+      renderRail();
+      updateCounts();
+    }
+  }
+
+  function showInputs(show){
+    mat.hidden = show;
+    inputs.hidden = !show;
+    inputActions.hidden = !show;
+    keys.hidden = show;
+    if(show){
+      ghostRows();
+      railBody.innerHTML = '<div class="rail-head"><span>先补这三个</span></div>' +
+        '<p class="rail-note">分析后，这里会挑出 JD 里提得最多的三项，并给出一句怎么做。</p>';
+      sumLine.innerHTML = '<span>贴好材料后点「分析匹配」，这里会出现 26 行对照。</span>';
+      rail.classList.remove('is-dim');
+    } else {
+      renderTable();
+      renderRail();
+      updateCounts();
+    }
+  }
+
+  function go(name){
+    document.querySelectorAll('.view').forEach(function(v){ v.hidden = v.dataset.view !== name; });
+    document.querySelectorAll('.nav-links [data-goto]').forEach(function(b){
+      if(b.dataset.goto === name) b.setAttribute('aria-current', 'page');
+      else b.removeAttribute('aria-current');
+    });
+    window.scrollTo(0, 0);
+  }
+
+  function analyze(){
+    showInputs(false);
+    setLoading(true);
+    window.setTimeout(function(){ setLoading(false); }, 1100);
+  }
+
+  /* events */
+  document.querySelectorAll('[data-goto]').forEach(function(el){
+    el.addEventListener('click', function(e){ e.preventDefault(); go(el.dataset.goto); });
+  });
+
+  document.getElementById('btn-analyze').addEventListener('click', analyze);
+  document.getElementById('btn-reanalyze').addEventListener('click', analyze);
+
+  document.getElementById('btn-change-jd').addEventListener('click', function(){
+    showInputs(true);
+    var jd = document.getElementById('jd');
+    jd.focus();
+    jd.setSelectionRange(jd.value.length, jd.value.length);
+  });
+
+  document.getElementById('btn-cancel').addEventListener('click', function(){
+    showInputs(false);
+  });
+
+  tbody.addEventListener('click', function(e){
+    var tr = e.target.closest('tr.row');
+    if(!tr) return;
+    setCur(+tr.dataset.i, { focus: true });
+  });
+
+  tbody.addEventListener('focusin', function(e){
+    var tr = e.target.closest('tr.row');
+    if(tr) setCur(+tr.dataset.i);
+  });
+
+  tbody.addEventListener('keydown', function(e){
+    if(e.altKey || e.ctrlKey || e.metaKey) return;
+    var tr = e.target.closest('tr.row');
+    if(!tr) return;
+    var i = +tr.dataset.i;
+    if(e.key === 'ArrowDown' || e.key === 'ArrowUp'){
+      e.preventDefault();
+      var ni = Math.max(0, Math.min(DATA.length - 1, i + (e.key === 'ArrowDown' ? 1 : -1)));
+      setCur(ni, { focus: true, scroll: true });
+    } else if(e.key === 'f' || e.key === 'F'){
+      e.preventDefault();
+      toggle(i);
+    } else if(e.key === 'Escape'){
+      e.preventDefault();
+      clearCur();
+    }
+  });
+
+  railBody.addEventListener('click', function(e){
+    var btn = e.target.closest('[data-skill]');
+    if(!btn) return;
+    var i = -1;
+    DATA.forEach(function(r, k){ if(r.skill === btn.dataset.skill) i = k; });
+    if(i < 0) return;
+    setCur(i, { focus: true, scroll: true });
+  });
+
+  document.getElementById('auth').addEventListener('submit', function(e){
+    e.preventDefault();
+    go('workspace');
+  });
+
+  document.querySelectorAll('[data-job]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.getElementById('jd-fname').textContent = btn.dataset.job + '-JD.txt';
+      document.querySelector('[data-view="workspace"] .page-meta').textContent = btn.dataset.job + ' · ' + btn.dataset.co;
+      go('workspace');
+    });
+  });
+
+  /* boot */
+  renderTable();
+  renderRail();
+  updateCounts();
+
+  if(location.hash === '#login') go('login');
+  if(location.hash === '#pool') go('pool');
+  if(/[?&]state=empty/.test(location.search)) showInputs(true);
+  if(/[?&]state=loading/.test(location.search)) setLoading(true);
+})();
+</script>
+</body>
+</html>

@@ -14,6 +14,10 @@ data/*.db
 data/*.db-wal
 data/*.db-shm
 
+# 截图与验证产物（含第三方参考截图，不入库）
+.review/
+demo/refs/
+
 # 杂项
 .DS_Store
 *.pem

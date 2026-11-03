@@ -10,6 +10,22 @@ import { createHmac, timingSafeEqual } from "node:crypto";
 export const SESSION_COOKIE = "jr_session";
 export const SESSION_MAX_AGE = 60 * 60 * 24 * 7; // 7 天
 
+/**
+ * Cookie 选项。Secure 只能在 https 下发——局域网 http://192.168.x.x 不是安全
+ * 上下文，浏览器会静默丢掉带 Secure 的 cookie，表现就是「登录后又跳回登录页」。
+ * 生产构建也让这里跟着请求协议走，而不是写死 NODE_ENV。
+ */
+export function sessionCookieOptions(req: Request) {
+  const proto = req.headers.get("x-forwarded-proto") ?? new URL(req.url).protocol.replace(":", "");
+  return {
+    httpOnly: true,
+    sameSite: "lax" as const,
+    path: "/",
+    maxAge: SESSION_MAX_AGE,
+    secure: proto === "https",
+  };
+}
+
 function secret(): string {
   const value = process.env.AUTH_SECRET;
   if (!value) {

@@ -13,4 +13,35 @@ body {
 
 body {
   @apply bg-ink-50 text-ink-900 antialiased;
+  font-size: 15px;
+  line-height: 1.75;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: #fae1da;
+  color: #191816;
+}
+
+/* 只用一条细线表示焦点，不用彩色光晕 */
+:focus-visible {
+  outline: 2px solid #191816;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* 表格里的数字用等宽数字，列才对得齐 */
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+/* 输入框去掉浏览器默认内阴影，统一 1px 线 */
+input,
+textarea,
+button {
+  font: inherit;
+}
+
+textarea {
+  resize: vertical;
 }

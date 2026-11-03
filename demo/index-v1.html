@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>岗位雷达 · 视觉方向（第一版）</title>
+<style>
+  :root{--paper:#F7F7F5;--line:rgba(25,24,22,.12);--ink:#191816;--mid:#4A4640;--mute:#6E6963;--accent:#C8321E}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);
+       font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;font-size:15px;line-height:1.75}
+  .wrap{max-width:880px;margin:0 auto;padding:56px 32px 80px}
+  h1{font-size:32px;line-height:1.2;letter-spacing:-.02em;font-weight:600;margin:0}
+  .lede{color:var(--mid);margin:12px 0 0;max-width:40em}
+  .note{margin-top:10px;font-size:13px;color:var(--mute)}
+  .list{margin-top:34px;border-top:1px solid var(--line)}
+  .row{display:grid;grid-template-columns:28px 1fr 90px;gap:18px;padding:22px 0;border-bottom:1px solid var(--line);align-items:start}
+  .row .no{font-size:12px;color:var(--mute);padding-top:5px;font-variant-numeric:tabular-nums}
+  .row h2{margin:0;font-size:18px;font-weight:600}
+  .row h2 a{text-decoration:none;color:inherit}
+  .row h2 a:hover{text-decoration:underline;text-underline-offset:3px}
+  .row p{margin:6px 0 0;font-size:13px;color:var(--mid);max-width:38em}
+  .row .go{justify-self:end;font-size:13px;text-decoration:none;border:1px solid var(--line);border-radius:6px;padding:6px 11px;color:var(--ink);white-space:nowrap}
+  .row .go:hover{background:rgba(25,24,22,.04)}
+  .back{display:inline-block;margin-top:28px;font-size:13px;color:var(--mid);text-decoration:none;border-bottom:1px solid var(--line)}
+  @media (max-width:720px){.wrap{padding:32px 20px 56px}.row{grid-template-columns:22px 1fr}.row .go{grid-column:2;justify-self:start;margin-top:6px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>岗位雷达 · 视觉方向（第一版）</h1>
+  <p class="lede">三个方向用同一份内容搭的，功能一样、长相不同。保留这一页只是留档——它们其实是同一个骨架，只换了配色。</p>
+  <p class="note">第二版在 <a href="index.html" style="color:inherit">这里</a>。</p>
+
+  <div class="list">
+    <div class="row">
+      <div class="no">A</div>
+      <div>
+        <h2><a href="a.html">冷静工具感</a></h2>
+        <p>冷灰纸面、细线分隔、信号红只标缺口和主操作。三栏：简历、JD、右侧常驻诊断，覆盖条用 26 个格子对应 26 项必备技能。</p>
+      </div>
+      <a class="go" href="a.html">打开 →</a>
+    </div>
+    <div class="row">
+      <div class="no">B</div>
+      <div>
+        <h2><a href="b.html">文档对照感</a></h2>
+        <p>纸白底色、宋体标题、红笔批注。简历和 JD 是两张并排的纸，诊断像书页边上的批注栏——最像有人拿红笔替你改过一遍。</p>
+      </div>
+      <a class="go" href="b.html">打开 →</a>
+    </div>
+    <div class="row">
+      <div class="no">C</div>
+      <div>
+        <h2><a href="c.html">深色控制台</a></h2>
+        <p>深灰底、青与琥珀分工，缺口全部进技能台账表，按 JD 提及次数排序。信息量最大，适合开着别的窗口时当仪表看。</p>
+      </div>
+      <a class="go" href="c.html">打开 →</a>
+    </div>
+  </div>
+
+  <a class="back" href="index.html">← 回第二版</a>
+</div>
+</body>
+</html>
