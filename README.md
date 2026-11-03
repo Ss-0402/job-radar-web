@@ -24,6 +24,7 @@ pnpm dev                     # http://localhost:3000
 | POST | `/api/auth/logout` | 退出，清 cookie |
 | GET | `/api/auth/me` | 当前用户 + 今日剩余额度 |
 | POST | `/api/resume/parse` | 上传文件或粘贴文本 → 纯文本 + 技能标签（规则，不耗额度） |
+| POST | `/api/jd/analyze` | JD → 结构化要求 + 缺口；调模型才扣额度，耗尽自动退回规则 |
 
 ## 目录
 
@@ -32,10 +33,12 @@ app/(app)/        受保护区域（layout 里做会话守卫）
 app/login/        登录 / 注册
 app/api/auth/     认证接口
 app/api/resume/   简历解析接口
+app/api/jd/       JD 分析接口
 lib/auth/         password(scrypt) · session(HMAC) · users(SQL) · guard
 lib/parse/        简历文件 → 文本（mammoth / unpdf）
-lib/match/        技能词表与抽取（含别名归一）
-lib/quota.ts      每日额度
+lib/match/        技能词表与抽取（含别名归一）· 缺口计算
+lib/llm/          DeepSeek 调用与 JD 结构化（失败回退规则）
+lib/quota.ts      每日额度（SQL 原子扣减）
 lib/db.ts         SQLite 连接与建表
 ```
 
@@ -44,8 +47,8 @@ lib/db.ts         SQLite 连接与建表
 - [x] 阶段 0：脚手架、Tailwind、首页壳子
 - [x] 阶段 1：注册 / 登录 / 会话守卫（SQLite）
 - [x] 阶段 2：简历解析（txt / md / docx / pdf）+ 规则技能抽取
-- [ ] 阶段 3：JD 分析 + 匹配结论 + 额度扣减
+- [x] 阶段 3：JD 分析 + 匹配结论 + 额度扣减
 - [ ] 阶段 4：示例岗位池 + 移动端打磨
 - [ ] 阶段 5：测试与收尾
 
-完整设计见 `../岗位雷达-NextJS-重构方案-v1.md`。
+完整设计见 `../文档/岗位雷达-NextJS-重构方案-v1.md`。
